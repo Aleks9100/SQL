@@ -15,7 +15,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     final String LOG_TAG = "myLog";
-    Button AddButton, ClearButton, ReadButton;
+    Button btnAdd, btnClear, btnRead,btnUpdate,btnDelete;
     EditText etName, etEmail;
     DBHelper dbHelper;
 
@@ -62,6 +62,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(LOG_TAG,"--- Clear mytable: ---");
                 int clear = db.delete("mytable",null,null);
                 Log.d(LOG_TAG,"deleted rows count = " + clear);
+                break;
+            case R.id.btnUpdate:
+                Log.d(LOG_TAG,"--- Update in mytable: ---");
+                if (id.equalsIgnoreCase("")){break;}
+                cv.put("name",name);
+                cv.put("email",email);
+                int upd = db.update("mytable",cv,"id=?",new String[]{id});
+                Log.d(LOG_TAG,"Update rows =" + upd);
+                break;
+            case R.id.btnDelete:
+                if (id.equalsIgnoreCase("")){break;}
+                Log.d(LOG_TAG,"--- Delete from mytable: ---");
+                int del =db.delete("mytable","id = "+id,null);
+                Log.d(LOG_TAG,"Delete id =" + del);
                 break;
         }
         dbHelper.close();
